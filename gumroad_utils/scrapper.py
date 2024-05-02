@@ -1,12 +1,14 @@
 import json
 import logging
-import re
+import re 
 import sys
 from datetime import date
-
+from dateutil.parser import parse as parse_date
 import humanize
 from bs4 import BeautifulSoup
-from dateutil.parser import parse as parse_date
+from dateutil import relativedelta as du_relativedelta
+du_relativedelta.relativedelta(month=1)
+
 from pathlib3x import Path
 from requests import Session as _RequestsSession
 from rich.progress import Progress as RichProgress
@@ -154,10 +156,8 @@ class GumroadScrapper:
 
         try:
             product_folder_name = self._product_folder_tmpl.format(
-                product_name=product_name,
                 purchase_at=purchase_date,
-                uploaded_at=uploaded_at,
-                price=price,
+
             )
         except TypeError:
             self._logger.info("'uploaded_at' is not available!")
